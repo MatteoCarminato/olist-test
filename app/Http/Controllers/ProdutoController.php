@@ -79,8 +79,7 @@ class ProdutoController extends Controller
      */
     public function update(ProdutoUpdateRequest $request, Produto $produto)
     {
-        $produto->quantity = $produto->quantity + $request->quantity;
-        $produto->update();
+        $produto->update($request->only(['name','quantity','tipo_produto_id']));
 
         return $this->sendResponse(new ProdutoResource($produto), 'Produto Atualizado.');
     }
@@ -96,5 +95,29 @@ class ProdutoController extends Controller
         $produto->delete();
 
         return $this->sendResponse(new ProdutoResource($produto), 'Produto Deletado.');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \App\Models\Produto $produto
+     * @return Produto[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Http\JsonResponse
+     */
+    public function updateArray(Request $request)
+    {
+        $data = $request->all();
+
+        foreach ($data as $datas){
+            $produtos = Produto::where('name', $datas['name'])->first();
+            if($produtos){
+                $quantity = $produtos->quantity + $datas['quantity'];
+                $produtos->update(['quantity' => $quantity]);
+            }
+
+        }
+        $produtos = Produto::all();
+
+        return $this->sendResponse(ProdutoResource::collection($produtos), 'Lista de Produtos Atualizados.');
+
     }
 }

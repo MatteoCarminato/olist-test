@@ -36,3 +36,4 @@ Route::get('produtos/{produto}', [ProdutoController::class,'show',])->name('prod
 Route::get('produtos/{produto}/edit', [ProdutoController::class, 'edit',])->name('produtos.edit');
 Route::put('produtos/{produto}', [ProdutoController::class, 'update',])->name('produtos.update');
 Route::delete('produtos/{produto}', [ProdutoController::class, 'destroy',])->name('produtos.destroy');
+Route::post('produtos/array', [ProdutoController::class, 'updateArray'])->name('produtos.updateArray');
