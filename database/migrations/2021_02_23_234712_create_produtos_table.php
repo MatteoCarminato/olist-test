@@ -20,6 +20,7 @@ class CreateProdutosTable extends Migration
             $table->unsignedBigInteger('tipo_produto_id')->nullable();
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

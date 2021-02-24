@@ -79,7 +79,8 @@ class ProdutoController extends Controller
      */
     public function update(ProdutoUpdateRequest $request, Produto $produto)
     {
-        $produto->update($request->only(['name','quantity','tipo_produto_id']));
+        $produto->quantity = $produto->quantity + $request->quantity;
+        $produto->update();
 
         return $this->sendResponse(new ProdutoResource($produto), 'Produto Atualizado.');
     }
